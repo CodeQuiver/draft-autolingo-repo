@@ -3,7 +3,7 @@
 var translate = require("google-translate-api");
 
 // Input Variables
-var userPhrase = "How do I get to the Eiffel Tower?"; // string input from html form
+var userPhrase = "Hello."; // string input from html form
 var fromLanguage = "en";
 var toLanguage = "fr";
 
@@ -12,28 +12,28 @@ var notifyMessage = "";
 var errorMessage = "";
 var translationOutput = "";
 
-
 // send translate query with variables filled in
 
 // TODO- Change this so that I only export a single result containing whatever message is needed!
-
-var finalTranslateResult = translate(
+module.exports = translate(
     userPhrase, {
         from: fromLanguage,
-        to: toLanguage}).then(res => {
+        to: toLanguage}).then(res => 
 
-            if (res.from.text.autoCorrected === false && res.from.text.didYouMean === false){
+            {if (res.from.text.autoCorrected === false && res.from.text.didYouMean === false){
                  // if successfully translated without any need to correct typos
-                // console.log(res.text);  // output translation
+                console.log("promise resolved " + res.text);  // output translation
+                //finalTranslateResult = res.text;
+                
                 return res.text;
             }
             else if (res.from.text.autoCorrected === true || res.from.text.didYouMean === true) {
     
                 return "Unable to translate - please check your entry for typos and try again.";          
-                }
+            }
             }).catch(err => {
                     console.error(err);
-                    return err;
+                    //return err;
         });
             
             // ===============OLD Section===================
@@ -66,8 +66,8 @@ var finalTranslateResult = translate(
 
 // export final response
 
-console.log(finalTranslateResult);
-
+//debugger;
+// console.log("-->"+translationOutput+"<--");
 // console.log(notifyMessage);
 // console.log(errorMessage);
 // console.log(translation.translationOutput);
